@@ -11,7 +11,7 @@ The Image Metadata Extractor plugin for Movable Type and Melody provides access 
 # Installation #
 
 The latest version of the plugin can be downloaded from the its
-[Github repo][]. [Packaged downloads][] are also available if you prefer.
+[Github repo](https://github.com/endevver/mt-plugin-image-metadata-extractor). [Packaged downloads](https://github.com/endevver/mt-plugin-image-metadata-extractor/downloads) are also available if you prefer.
 
 Installation follows the [standard plugin installation](http://tinyurl.com/easy-plugin-install) procedures.
 
