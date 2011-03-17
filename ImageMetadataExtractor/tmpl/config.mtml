@@ -1,0 +1,52 @@
+<mtapp:setting
+    id="update_asset_label"
+    label="Update Asset Label"
+    hint="During file upload, update the Asset Label with an EXIF or IPTC value extracted from the image. Select the field to copy from."
+    show_hint="1">
+    <select name="update_asset_label">
+        <option<mt:If name="update_asset_label" eq=""> selected="selected"</mt:If>>None</option>
+        <option value="document_title"<mt:If name="update_asset_label" eq="document_title"> selected="selected"</mt:If>>Document title</option>
+        <option value="image_description"<mt:If name="update_asset_label" eq="image_description"> selected="selected"</mt:If>>Image description</option>
+        <option value="iptc_headline"<mt:If name="update_asset_label" eq="iptc_headline"> selected="selected"</mt:If>>IPTC headline</option>
+        <option value="iptc_title"<mt:If name="update_asset_label" eq="iptc_title"> selected="selected"</mt:If>>IPTC title</option>
+        <option value="iptc_description"<mt:If name="update_asset_label" eq="iptc_description"> selected="selected"</mt:If>>IPTC description</option>
+        <option value="iptc_sublocation"<mt:If name="update_asset_label" eq="iptc_sublocation"> selected="selected"</mt:If>>IPTC sublocation</option>
+    </select>
+</mtapp:setting>
+
+<mtapp:setting
+    id="update_asset_description"
+    label="Update Asset Description"
+    hint="During file upload, update the Asset Description with an EXIF or IPTC value extracted from the image. Select the field to copy from."
+    show_hint="1">
+    <select name="update_asset_description">
+        <option<mt:If name="update_asset_label" eq=""> selected="selected"</mt:If>>None</option>
+        <option value="document_title"<mt:If name="update_asset_description" eq="document_title"> selected="selected"</mt:If>>Document title</option>
+        <option value="image_description"<mt:If name="update_asset_description" eq="image_description"> selected="selected"</mt:If>>Image description</option>
+        <option value="iptc_headline"<mt:If name="update_asset_description" eq="iptc_headline"> selected="selected"</mt:If>>IPTC headline</option>
+        <option value="iptc_title"<mt:If name="update_asset_description" eq="iptc_title"> selected="selected"</mt:If>>IPTC title</option>
+        <option value="iptc_description"<mt:If name="update_asset_description" eq="iptc_description"> selected="selected"</mt:If>>IPTC description</option>
+        <option value="iptc_sublocation"<mt:If name="update_asset_description" eq="iptc_sublocation"> selected="selected"</mt:If>>IPTC sublocation</option>
+    </select>
+</mtapp:setting>
+
+<mtapp:setting
+    id="update_asset_tags"
+    label="Update Asset Tags">
+    <input type="checkbox" name="update_asset_tags" id="update_asset_tags"<mt:If name="update_asset_tags"> checked="checked"</mt:if> value="1" />
+    <label for="update_asset_tags">During file upload, add the EXIF/IPTC keywords extracted from the image to the asset&rsquo;s Tags field.</label>
+</mtapp:setting>
+
+<mtapp:setting
+    id="show_empty_fields"
+    label="Show Empty Fields">
+    <input type="checkbox" name="show_empty_fields" id="show_empty_fields"<mt:If name="show_empty_fields"> checked="checked"</mt:if> value="1" />
+    <label for="show_empty_fields">After metadata has been extracted, it can be viewed on the Edit Asset page. If a field has not been populated, should the field name be shown?</label>
+</mtapp:setting>
+
+<mtapp:setting
+    id="show_map_preview"
+    label="Show Map Preview">
+    <input type="checkbox" name="show_map_preview" id="show_map_preview"<mt:If name="show_map_preview"> checked="checked"</mt:if> value="1" />
+    <label for="show_map_preview">If GPS coordinates can be extracted from the metadata, a preview map will be displayed on the Edit Asset page. This feature uses Google Maps to create the map image.</label>
+</mtapp:setting>

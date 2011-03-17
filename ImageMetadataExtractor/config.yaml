@@ -1,0 +1,127 @@
+name:           Image Metadata Extractor
+id:             imagemetadataextractor
+key:            imagemetadataextractor
+description:    'Access the EXIF and IPTC metadata found in image files &mdash; especially from digital cameras.'
+author_name:    'Endevver, LLC'
+author_link:    http://endevver.com
+version:        1.0
+schema_version: 1
+
+object_types:
+    # GPS lat/long should be real columns on the mt_asset table so that they 
+    # can be easily searched and ranges can be created to easily draw points 
+    # on maps, for example. Byrne's idea for this is something like:
+    # <mt:Assets gps_latitude="[latcoords]" gps_longitude="[longcoords]">...
+    asset.file:
+        gps_latitude:               string(255)
+        gps_longitude:              string(255)
+    asset.image:
+        # EXIF: common camera-recorded meta
+        camera_make:                string meta
+        camera_model:               string meta
+        lens:                       string meta
+        focal_length:               string meta
+        focal_length_in_35mm:       string meta
+        exposure_mode:              string meta
+        metering_mode:              string meta
+        shutter_speed:              string meta
+        aperture:                   string meta
+        iso:                        string meta
+        exposure_compensation:      string meta
+        white_balance:              string meta
+        flash_fired:                string meta
+        original_datetime:          datetime meta
+        gps_altitude:               string meta
+        # A blurred line between EXIF and IPTC: common user-supplied meta
+        document_title:             text meta
+        creator:                    string meta
+        creator_title:              string meta
+        image_description:          text meta
+        description_writer:         string meta
+        keywords:                   text meta
+        copyright_notice:           text meta
+        copyright_status:           string meta
+        copyright_info_url:         string meta
+        rating:                     string meta
+        # IPTC Core meta
+        iptc_description:           text meta
+        iptc_headline:              text meta
+        iptc_keywords:              text meta
+        # The following (intellectual genre, scene code, and subject code) 
+        # should only contain IPTC Subject NewsCode Controlled Vocabulary 
+        # Values (http://www.newscodes.org)
+        iptc_intellectual_genre:    text meta
+        iptc_scene_code:            text meta
+        iptc_subject_code:          text meta
+        iptc_date_created:          datetime meta
+        iptc_description_writer:    text meta
+        iptc_instructions:          text meta
+        iptc_job_id:                text meta
+        iptc_title:                 text meta
+        iptc_copyright_notice:      text meta
+        iptc_creator:               string meta
+        iptc_creator_job_title:     string meta
+        iptc_credit_line:           text meta
+        iptc_rights_usage_terms:    text meta
+        iptc_source:                text meta
+        iptc_creator_address:       text meta
+        iptc_creator_city:          string meta
+        # The "region" is typically displayed as "State/Province," but 
+        # "region" is the IPTC proper name.
+        iptc_creator_region:        string meta
+        iptc_creator_country:       string meta
+        iptc_creator_postal_code:   string meta
+        # Comma-separated email addresses, phone numbers, and URLs are 
+        # valid, so the field should be bigger than a string.
+        iptc_creator_email:         text meta
+        iptc_creator_phone:         text meta
+        iptc_creator_url:           text meta
+        # The following are legacy fields, which have since become part of 
+        # IPTC Extension. But to be clear, they are legacy fields, not 
+        # deprecated fields, so we'll include them. The following are intended to 
+        # be fields about the event, location, or activity.
+        # "Sublocation" could be an area of a city or a natural monument, for
+        # example.
+        iptc_sublocation:           text meta
+        iptc_city:                  string meta
+        iptc_state:                 string meta
+        iptc_country:               string meta
+        # 2-3 letter ISO 3166 Country Code of the Country shown in this image
+        iptc_country_code:          string meta
+
+callbacks:
+    cms_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback
+    api_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback
+    MT::App::CMS::template_param.edit_asset: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::add_asset_image_meta
+    MT::App::CMS::template_param.asset_options: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::insert_asset_options_param
+    MT::App::CMS::template_source.asset_options: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::insert_asset_options_source
+
+blog_config_template: config.mtml
+
+settings:
+    update_asset_label:
+        scope: blog
+    update_asset_description:
+        scope: blog
+    update_asset_tags:
+        scope: blog
+    show_empty_fields:
+        scope: blog
+        default: 0
+    show_map_preview:
+        scope: blog
+        default: 1
+
+list_actions:
+    asset:
+        extract_image_metadata:
+            label: 'Extract Image Metadata'
+            order: 100
+            code: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::list_action
+
+page_actions:
+    asset:
+        extract_image_metadata:
+            label: 'Extract Image Metadata'
+            order: 100
+            code: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::list_action
