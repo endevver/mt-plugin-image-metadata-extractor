@@ -47,7 +47,7 @@ sub list_action {
 
 # Extract the EXIF and IPTC metadata from the image and save it to the asset
 # in meta fields.
-sub _extract_meta {
+sub _extract_image_meta {
     my ($asset) = @_;
 
     # Collect the EXIF and IPTC metadata
@@ -236,6 +236,24 @@ sub _extract_meta {
     # Finally, save all of the data.
     $asset->save or die $asset->errstr;
 }
+
+sub _extract_audio_meta {
+    my ($asset) = @_;
+
+    # Collect the EXIF and IPTC metadata
+    my $info = ImageInfo(
+        $asset->file_path,
+        {
+        }
+    );
+
+    $asset->duration( $info->{'Duration'} );
+
+    # Finally, save all of the data.
+    $asset->save or die $asset->errstr;
+}
+
+
 
 1;
 
