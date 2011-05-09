@@ -34,8 +34,12 @@ sub list_action {
     my @asset_ids = $app->param('id');
     foreach my $asset_id (@asset_ids) {
         my $asset = MT->model('asset')->load($asset_id);
-        next if $asset->class ne 'image';
-        _extract_meta($asset);
+
+        if ($asset->class eq 'image') {
+            _extract_image_meta($asset);
+        } elsif ($asset->class eq 'audio') {
+            _extract_audio_meta($asset);
+        }
     }
 
     $app->call_return;
