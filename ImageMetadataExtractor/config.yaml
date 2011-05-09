@@ -114,14 +114,14 @@ settings:
 
 list_actions:
     asset:
-        extract_image_metadata:
-            label: 'Extract Image Metadata'
+        extract_asset_metadata:
+            label: 'Extract Asset Metadata'
             order: 100
             code: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::list_action
 
 page_actions:
     asset:
-        extract_image_metadata:
-            label: 'Extract Image Metadata'
+        extract_asset_metadata:
+            label: 'Extract Asset Metadata'
             order: 100
             code: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::list_action
