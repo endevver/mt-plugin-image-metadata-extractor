@@ -94,7 +94,7 @@ object_types:
 callbacks:
     cms_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback
     api_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback
-    MT::App::CMS::template_param.edit_asset: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::add_asset_image_meta
+    MT::App::CMS::template_param.edit_asset: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::add_asset_meta
     MT::App::CMS::template_param.asset_options: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::insert_asset_options_param
     MT::App::CMS::template_source.asset_options: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::insert_asset_options_source
 
