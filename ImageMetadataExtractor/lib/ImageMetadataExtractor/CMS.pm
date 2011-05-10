@@ -10,11 +10,10 @@ our $show_empty_fields;
 our $show_map_preview;
 
 # Display the extracted metadata on the Edit Asset page.
-sub add_asset_image_meta {
+sub add_asset_meta {
     my ( $cb, $app, $param, $tmpl ) = @_;
 
-    # Only update the page if this is an Image asset.
-    return 1 if $param->{asset_type} ne 'image';
+#return 1 if $param->{asset_type} ne 'image';
 
     my $plugin  = $cb->plugin;
     # Populate $show_empty_fields to be used later with _field_wrapper. Same
@@ -30,6 +29,18 @@ sub add_asset_image_meta {
       or die sprintf( "Could not load asset ID %s: %s",
                       $param->{id}, $asset_pkg->errstr );
 
+    if ($param->{asset_type} eq 'image') {
+        add_asset_image_meta($cb, $app, $param, $tmpl, $asset);
+    } elsif ($param->{asset_type} eq 'audio') {
+        add_asset_audio_meta($cb, $app, $param, $tmpl, $asset);
+    } else {
+        return 1;
+    }
+}
+
+sub add_asset_image_meta {
+    my ( $cb, $app, $param, $tmpl, $asset ) = @_;
+    
     # Break the image metadata into three tabs: camera data, description, and 
     # IPTC Core. Build each of those then place them into an app:SettingGroup, 
     # and insert that onto the page.
@@ -267,6 +278,144 @@ HTML
 
     $tmpl->insertAfter( $group_field, $tags_field )
         or die MT->log('Failed to insert the Camera Metadata field into template.');
+}
+
+sub add_asset_audio_meta {
+    my ( $cb, $app, $param, $tmpl, $asset ) = @_;
+
+    my $audio_meta_field = $tmpl->createElement(
+        'app:setting',
+        {
+           id          => 'audio_asset_metadata',
+           label       => 'Audio Metadata',
+           label_class => 'text-top',
+        }
+    );
+
+    $audio_meta_field->innerHTML(
+        _field_wrapper('Duration', $asset->duration)
+    );
+
+    if ($audio_meta_field->innerHTML eq '') {
+        $audio_meta_field->innerHTML('<p>No metadata was found.</p>');
+    }
+
+    # Create the group field to hold all of the meta fields.
+    my $group_field = $tmpl->createElement(
+        'app:settinggroup',
+        {
+            id => 'audio_metadata',
+        }
+    );
+
+    my $nav = <<"HTML";
+<style type="text/css">
+/* The fields on the Edit Asset page are all constrained to 300px wide so that 
+   the thumbnail will fit. Because the extracted metadata block should fill 
+   the width of the page to make good use of the space, the page needs to be
+   styled differently to make things work. */
+.edit-asset #main-content .asset-metadata {
+    float: none;
+    width: auto;
+}
+.edit-asset #main-content .field {
+    width: 300px;
+    overflow: hidden;
+}
+fieldset#audio_metadata {
+    padding-top: 10px;
+    clear: both;
+}
+ul#audio_metadata_nav {
+    padding-bottom: 2px;
+    border-bottom: 3px solid #e7f0f6;
+}
+ul#audio_metadata_nav li {
+    display: inline;
+    background: #e7f0f6;
+    padding: 5px 8px;
+    margin: 0 0 0 5px;
+    cursor: pointer;
+}
+ul#audio_metadata_nav li.selected {
+    background: #90c9ea;
+}
+ul#audio_metadata_nav li:hover { background: #90c9ea; }
+.edit-asset #main-content fieldset#audio_metadata .field {
+    width: auto;
+}
+.field.audio-metadata {
+    margin: 2px 0 5px;
+}
+.field.audio-metadata .field-header {
+    color: #777;
+    margin: 0;
+}
+.field.audio-metadata .field-content p:last-child {
+    margin-bottom: 0;
+}
+
+.edit-asset #main-content .asset-preview.map-preview .asset-thumb {
+    border: 1px solid #000;
+    height: 260px;
+}
+.edit-asset #main-content .asset-preview.map-preview .asset-thumb-inner {
+    margin: 0;
+    height: 260px;
+}
+</style>
+
+<mt:Unless tag="ProductName" eq="Melody">
+<script type="text/javascript" src="http://localhost/mt435-static/jquery/jquery.js"></script>
+</mt:Unless>
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    // When a tab is clicked, show the appropriate data.
+    jQuery('ul#audio_metadata_nav li').click(function(){
+        // Hide all of the fields first
+        jQuery('#audio_metadata .field-text-top').addClass('hidden');
+        jQuery('ul#audio_metadata_nav li').removeClass('selected');
+
+        // Remove the "hidden" class for the selected tab
+        var selected = jQuery(this).attr('class');
+        jQuery('#' + selected + '-field').removeClass('hidden');
+
+        // Style the selected tab slightly
+        jQuery(this).addClass('selected');
+    });
+    
+    // When mousing-over the map, zoom in.
+    jQuery('img.map-preview-image-1').mouseover(function(){
+        jQuery(this).addClass('hidden');
+        jQuery('img.map-preview-image-2').removeClass('hidden');
+    });
+    jQuery('img.map-preview-image-2').mouseout(function(){
+        jQuery(this).addClass('hidden');
+        jQuery('img.map-preview-image-1').removeClass('hidden');
+    });
+});
+</script>
+<ul id="audio_metadata_nav">
+    <li class="audio_metadata selected">Audio</li>
+</ul>
+HTML
+
+    $group_field->innerHTML($nav);
+
+    # I think I should be able to use $group_field->appendChild here to add 
+    # the meta fields to the group, however it doesn't work. Calling 
+    # $group_field->appendChild is using MT::Template::Node::appendChild. 
+    # Just grabbing the meat of MT::Template::appendChild and using it below 
+    # does work, though.
+    my $nodes = $group_field->childNodes;
+    push @$nodes, $audio_meta_field;
+    $group_field->childNodes($nodes);
+
+    my $tags_field = $tmpl->getElementById('tags')
+        or die MT->log('Cannot identify the tags field block in template');
+
+    $tmpl->insertAfter( $group_field, $tags_field )
+        or die MT->log('Failed to insert the Audio Metadata field into template.');
 }
 
 # This wrapper is based on what is generated by mtapp:Setting, but has been
