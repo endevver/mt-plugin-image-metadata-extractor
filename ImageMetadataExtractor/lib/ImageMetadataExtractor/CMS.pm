@@ -215,7 +215,7 @@ ul#image_metadata_nav li:hover { background: #90c9ea; }
 </style>
 
 <mt:Unless tag="ProductName" eq="Melody">
-<script type="text/javascript" src="http://localhost/mt435-static/jquery/jquery.js"></script>
+<script type="text/javascript" src="<mt:StaticWebPath>jquery/jquery.js"></script>
 </mt:Unless>
 <script type="text/javascript">
 jQuery(document).ready(function() {
