@@ -89,7 +89,15 @@ object_types:
         # 2-3 letter ISO 3166 Country Code of the Country shown in this image
         iptc_country_code:          string meta
     asset.audio:
+        title:                string meta
+        artist:                string meta
+        album:                string meta
+        year:                string meta
+        comment:                string meta
+        track:                string meta
+        genre:                string meta
         duration:                string meta
+        bitrate:                string meta
 
 callbacks:
     cms_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback

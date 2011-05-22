@@ -293,7 +293,15 @@ sub add_asset_audio_meta {
     );
 
     $audio_meta_field->innerHTML(
-        _field_wrapper('Duration', $asset->duration)
+        _field_wrapper('Title', $asset->title)
+        . _field_wrapper('Artist', $asset->artist)
+        . _field_wrapper('Album', $asset->album)
+        . _field_wrapper('Track', $asset->track)
+        . _field_wrapper('Year', $asset->year)
+        . _field_wrapper('Genre', $asset->genre)
+        . _field_wrapper('Comment', $asset->comment)
+        . _field_wrapper('Duration', $asset->duration)
+        . _field_wrapper('Bitrate', $asset->bitrate)
     );
 
     if ($audio_meta_field->innerHTML eq '') {

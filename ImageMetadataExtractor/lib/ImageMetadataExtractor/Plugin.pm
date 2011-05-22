@@ -247,7 +247,16 @@ sub _extract_audio_meta {
         }
     );
 
+    $asset->title( $info->{'Title'} );
+    $asset->artist( $info->{'Artist'} );
+    $asset->album( $info->{'Album'} );
+    $asset->year( $info->{'Year'} );
+    $asset->comment( $info->{'Comment'} );
+    $asset->track( $info->{'Track'} );
+    $asset->genre( $info->{'Genre'} );
+
     $asset->duration( $info->{'Duration'} );
+    $asset->bitrate( $info->{'AudioBitrate'} );
 
     # Finally, save all of the data.
     $asset->save or die $asset->errstr;
