@@ -256,7 +256,7 @@ sub _extract_audio_meta {
     $asset->genre( $info->{'Genre'} );
 
     $asset->duration( $info->{'Duration'} );
-    $asset->bitrate( $info->{'AudioBitrate'} );
+    $asset->audiobitrate( $info->{'AudioBitrate'} );
 
     # Finally, save all of the data.
     $asset->save or die $asset->errstr;

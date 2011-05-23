@@ -97,7 +97,7 @@ object_types:
         track:                string meta
         genre:                string meta
         duration:                string meta
-        bitrate:                string meta
+        audiobitrate:                string meta
 
 callbacks:
     cms_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback

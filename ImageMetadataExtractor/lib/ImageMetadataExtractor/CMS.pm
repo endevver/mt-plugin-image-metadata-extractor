@@ -301,7 +301,7 @@ sub add_asset_audio_meta {
         . _field_wrapper('Genre', $asset->genre)
         . _field_wrapper('Comment', $asset->comment)
         . _field_wrapper('Duration', $asset->duration)
-        . _field_wrapper('Bitrate', $asset->bitrate)
+        . _field_wrapper('Audio Bitrate', $asset->audiobitrate)
     );
 
     if ($audio_meta_field->innerHTML eq '') {
