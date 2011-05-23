@@ -62,6 +62,7 @@ Check that the current asset is an image asset before processing it.
 
 Image Metadata Extractor adds many more valid properties, listed below.
 
+### Images
 Note: a specific camera may not supply all EXIF metadata, a user may not supply all IPTC metadata, and that metadata may be stripped when saving an image from some applications. In other words, metadata may not be available (or may only be partially complete) for a specific image.
 
 * `camera_make` - the manufacturer of the camera.
@@ -127,6 +128,18 @@ The following is user-supplied metadata, typically entered through an image edit
 * `iptc_state` - name of the subregion of a country -- either called province or state or anything else -- the content is focussing on.
 * `iptc_country` - full name of the country the content is focussing on.
 * `iptc_country_code` - code of the country the content is focussing on; 2-3 letter ISO 3166 Country Code.
+
+### Audio
+
+* `title` - the track title
+* `artist` - the artist who produced the track
+* `album` - the album this track appears on
+* `year` - the year the track was produced
+* `comment` - a general comment field
+* `track` - this position this track appears in on its album
+* `genre` - the ID3 genre
+* `duration` - the track's running time
+* `audiobitrate` - the bitrate used to encode the audio
 
 
 # License
