@@ -40,8 +40,12 @@ sub list_action {
     my @asset_ids = $app->param('id');
     foreach my $asset_id (@asset_ids) {
         my $asset = MT->model('asset')->load($asset_id);
-        next if $asset->class ne 'image';
-        _extract_meta($asset);
+
+        if ($asset->class eq 'image') {
+            _extract_image_meta($asset);
+        } elsif ($asset->class eq 'audio') {
+            _extract_audio_meta($asset);
+        }
     }
 
     $app->call_return;
@@ -49,7 +53,7 @@ sub list_action {
 
 # Extract the EXIF and IPTC metadata from the image and save it to the asset
 # in meta fields.
-sub _extract_meta {
+sub _extract_image_meta {
     my ($asset) = @_;
 
     # Collect the EXIF and IPTC metadata
@@ -238,6 +242,33 @@ sub _extract_meta {
     # Finally, save all of the data.
     $asset->save or die $asset->errstr;
 }
+
+sub _extract_audio_meta {
+    my ($asset) = @_;
+
+    # Collect the EXIF and IPTC metadata
+    my $info = ImageInfo(
+        $asset->file_path,
+        {
+        }
+    );
+
+    $asset->title( $info->{'Title'} );
+    $asset->artist( $info->{'Artist'} );
+    $asset->album( $info->{'Album'} );
+    $asset->year( $info->{'Year'} );
+    $asset->comment( $info->{'Comment'} );
+    $asset->track( $info->{'Track'} );
+    $asset->genre( $info->{'Genre'} );
+
+    $asset->duration( $info->{'Duration'} );
+    $asset->audiobitrate( $info->{'AudioBitrate'} );
+
+    # Finally, save all of the data.
+    $asset->save or die $asset->errstr;
+}
+
+
 
 1;
 
