@@ -204,14 +204,14 @@ ul#image_metadata_nav li:hover { background: #90c9ea; }
 .edit-asset #main-content fieldset#image_metadata .field {
     width: auto;
 }
-.field.image-metadata {
+.field.asset-metadata {
     margin: 2px 0 5px;
 }
-.field.image-metadata .field-header {
+.field.asset-metadata .field-header {
     color: #777;
     margin: 0;
 }
-.field.image-metadata .field-content p:last-child {
+.field.asset-metadata .field-content p:last-child {
     margin-bottom: 0;
 }
 
@@ -352,14 +352,14 @@ ul#audio_metadata_nav li:hover { background: #90c9ea; }
 .edit-asset #main-content fieldset#audio_metadata .field {
     width: auto;
 }
-.field.audio-metadata {
+.field.asset-metadata {
     margin: 2px 0 5px;
 }
-.field.audio-metadata .field-header {
+.field.asset-metadata .field-header {
     color: #777;
     margin: 0;
 }
-.field.audio-metadata .field-content p:last-child {
+.field.asset-metadata .field-content p:last-child {
     margin-bottom: 0;
 }
 
@@ -440,7 +440,7 @@ sub _field_wrapper {
     $data = MT->apply_text_filters($data, ['__default__']);
 
     return qq{
-        <div class="field field-left-label pkg image-metadata">
+        <div class="field field-left-label pkg asset-metadata">
             <div class="field-inner">
                 <div class="field-header">
                     $label
