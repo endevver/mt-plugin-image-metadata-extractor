@@ -5,7 +5,7 @@ use warnings;
 use MT::Asset::Image;
 use Image::ExifTool qw( :Public );
 
-sub upload_image_callback {
+sub upload_file_callback {
     # "Shift" the data off of @_ so that $params collects all of the 
     # parameters in the callback. The following does not properly populate
     # $params, so it must be shifted instead.
@@ -22,11 +22,17 @@ sub upload_image_callback {
     my $asset = $params->{Asset}
         or return 1; # Not an asset?
 
-    # The upload image callback should only be firing for assets of the 
-    # "image" class, so everything should work... but check anyway.
-    return 1 if $asset && $asset->class ne 'image';
+    # Extract metadata from images and photos.
+    if ( $asset->class eq 'image'
+         || $asset->class eq 'photo' # for the Photo Gallery plugin
+    ) {
+        _extract_image_meta($asset);
+    }
 
-    _extract_meta($asset);
+    # Extract metadata from audio files.
+    if ( $asset->class eq 'audio' ) {
+        _extract_audio_meta($asset);
+    }
 
     1;
 }

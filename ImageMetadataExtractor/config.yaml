@@ -100,8 +100,8 @@ object_types:
         audiobitrate:               string meta
 
 callbacks:
-    cms_upload_image: ImageMetadataExtractor::Plugin::upload_image_callback
-    api_upload_image: ImageMetadataExtractor::Plugin::upload_image_callback
+    cms_upload_file: ImageMetadataExtractor::Plugin::upload_file_callback
+    api_upload_file: ImageMetadataExtractor::Plugin::upload_file_callback
     MT::App::CMS::template_param.edit_asset: ImageMetadataExtractor::CMS::add_asset_meta
     MT::App::CMS::template_param.asset_options: ImageMetadataExtractor::CMS::insert_asset_options_param
     MT::App::CMS::template_source.asset_options: ImageMetadataExtractor::CMS::insert_asset_options_source
