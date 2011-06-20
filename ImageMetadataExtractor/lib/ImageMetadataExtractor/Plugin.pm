@@ -11,7 +11,8 @@ sub upload_image_callback {
     # $params, so it must be shifted instead.
     #my ($cb, $params) = @_;
     my $cb = shift;
-
+    
+    my $params = {};
     while (@_) {
         my $key   = shift;
         my $value = shift;
