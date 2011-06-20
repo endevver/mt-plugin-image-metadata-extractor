@@ -11,9 +11,15 @@ sub upload_image_callback {
     # $params, so it must be shifted instead.
     #my ($cb, $params) = @_;
     my $cb = shift;
-    my $params = shift;
 
-    my $asset = $params->{Asset};
+    while (@_) {
+        my $key   = shift;
+        my $value = shift;
+        $params->{$key} = $value;
+    }
+
+    my $asset = $params->{Asset}
+        or return 1; # Not an asset?
 
     # The upload image callback should only be firing for assets of the 
     # "image" class, so everything should work... but check anyway.
