@@ -459,7 +459,7 @@ sub _map_preview {
     my ($lat, $long) = @_;
     
     # If GPS coordinates aren't available there's no point in displaying a map.
-    return if !$lat || !$long || !$show_map_preview;
+    return '' if !$lat || !$long || !$show_map_preview;
     
     return qq{
         <div class="asset-preview map-preview">
