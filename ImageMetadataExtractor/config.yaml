@@ -89,22 +89,22 @@ object_types:
         # 2-3 letter ISO 3166 Country Code of the Country shown in this image
         iptc_country_code:          string meta
     asset.audio:
-        title:                string meta
-        artist:                string meta
-        album:                string meta
-        year:                string meta
-        comment:                string meta
-        track:                string meta
-        genre:                string meta
-        duration:                string meta
-        audiobitrate:                string meta
+        title:                      string meta
+        artist:                     string meta
+        album:                      string meta
+        year:                       string meta
+        comment:                    string meta
+        track:                      string meta
+        genre:                      string meta
+        duration:                   string meta
+        audiobitrate:               string meta
 
 callbacks:
-    cms_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback
-    api_upload_image: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::upload_image_callback
-    MT::App::CMS::template_param.edit_asset: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::add_asset_meta
-    MT::App::CMS::template_param.asset_options: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::insert_asset_options_param
-    MT::App::CMS::template_source.asset_options: $ImageMetadataExtractor::ImageMetadataExtractor::CMS::insert_asset_options_source
+    cms_upload_image: ImageMetadataExtractor::Plugin::upload_image_callback
+    api_upload_image: ImageMetadataExtractor::Plugin::upload_image_callback
+    MT::App::CMS::template_param.edit_asset: ImageMetadataExtractor::CMS::add_asset_meta
+    MT::App::CMS::template_param.asset_options: ImageMetadataExtractor::CMS::insert_asset_options_param
+    MT::App::CMS::template_source.asset_options: ImageMetadataExtractor::CMS::insert_asset_options_source
 
 blog_config_template: config.mtml
 
@@ -127,11 +127,11 @@ list_actions:
         extract_asset_metadata:
             label: 'Extract Asset Metadata'
             order: 100
-            code: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::list_action
+            code: ImageMetadataExtractor::Plugin::list_action
 
 page_actions:
     asset:
         extract_asset_metadata:
             label: 'Extract Asset Metadata'
             order: 100
-            code: $ImageMetadataExtractor::ImageMetadataExtractor::Plugin::list_action
+            code: ImageMetadataExtractor::Plugin::list_action
