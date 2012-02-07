@@ -4,7 +4,7 @@ key:            imagemetadataextractor
 description:    'Access the EXIF and IPTC metadata found in image files &mdash; especially from digital cameras.'
 author_name:    'Endevver, LLC'
 author_link:    http://endevver.com
-version:        1.0.3
+version:        1.0.4
 schema_version: 1
 
 object_types:
@@ -102,7 +102,10 @@ object_types:
 callbacks:
     cms_upload_file: ImageMetadataExtractor::Plugin::upload_file_callback
     api_upload_file: ImageMetadataExtractor::Plugin::upload_file_callback
-    MT::App::CMS::template_param.edit_asset: ImageMetadataExtractor::CMS::add_asset_meta
+    MT::App::CMS::template_param.edit_asset:
+        handler: ImageMetadataExtractor::CMS::add_asset_meta
+        # Seems to need a higher priority when interacting with some plugins...
+        priority: 4
     MT::App::CMS::template_param.asset_options: ImageMetadataExtractor::CMS::insert_asset_options_param
     MT::App::CMS::template_source.asset_options: ImageMetadataExtractor::CMS::insert_asset_options_source
 
