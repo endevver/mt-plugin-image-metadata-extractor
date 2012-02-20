@@ -192,7 +192,7 @@ sub _extract_image_meta {
     # A note (mostly for Jay, ha): I didn't use a prototype to assign all of 
     # these values because I wanted to maintain parity with the IPTC spec as
     # best I could: the meta field names used here aligns with the IPTC 
-    # generic specification "name" (dirified),  and the value coming from 
+    # generic specification "name" (dirified), and the value coming from 
     # $info corresponds to the IPTC XMP implementation property ID.
 
     $asset->iptc_description( $info->{'Description'} );
@@ -209,7 +209,11 @@ sub _extract_image_meta {
     $asset->iptc_description_writer( $info->{'CaptionWriter'} );
     $asset->iptc_instructions( $info->{'Instructions'} );
     $asset->iptc_job_id( $info->{'TransmissionReference'} );
-    $asset->iptc_title( $info->{'title'} );
+    $asset->iptc_title(
+        $info->{'title'}         # IPTC Core XMP property ID
+        || $info->{'Title'}      # EXIF value
+        || $info->{'ObjectName'} # EXIF fallback
+    );
     $asset->iptc_copyright_notice( $info->{'rights'} );
     $asset->iptc_creator( $info->{'creator'} );
     $asset->iptc_creator_job_title( $info->{'AuthorsPosition'} );
