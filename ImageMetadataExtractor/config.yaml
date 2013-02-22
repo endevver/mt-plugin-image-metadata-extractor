@@ -2,7 +2,7 @@ name:           Image Metadata Extractor
 id:             imagemetadataextractor
 key:            imagemetadataextractor
 description:    'Access the EXIF and IPTC metadata found in image files &mdash; especially from digital cameras.'
-author_name:    'Endevver, LLC'
+author_name:    'Dan Wolfgang, Endevver, LLC'
 author_link:    http://endevver.com
 version:        1.0.5
 schema_version: 1
